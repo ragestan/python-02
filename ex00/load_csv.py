@@ -4,34 +4,28 @@ import pandas as pd
 def load(path: str):
     """
     Load a CSV file, print its dimensions, and return the dataset.
-
-    Args:
-        path: Path to the CSV file
-
-    Returns:
-        pandas DataFrame if successful, None if error
     """
     try:
-        # STEP 1: Check if path is valid string
+        # Validate that path is a string
         if not isinstance(path, str):
             print("Error: Path must be a string")
             return None
 
-        # STEP 2: Try to read the CSV
+        # Read the CSV file using pandas
         dataset = pd.read_csv(path)
 
-        # STEP 3: Check if dataset is empty
+        # Verify that the dataset is not empty
         if dataset.empty:
             print("Error: Dataset is empty")
             return None
 
-        # STEP 4: Get dimensions
+        # Get the dimensions of the dataset
         rows, cols = dataset.shape
 
-        # STEP 5: Print dimensions
+        # Print the dimensions
         print(f"Loading dataset of dimensions ({rows}, {cols})")
 
-        # STEP 6: Return the dataset
+        # Return the loaded dataset
         return dataset
 
     except FileNotFoundError:
@@ -43,3 +37,19 @@ def load(path: str):
     except Exception as e:
         print(f"Error: {str(e)}")
         return None
+
+
+def main():
+    """
+    Main function to demonstrate the load function.
+    """
+    try:
+        dataset = load("life_expectancy_years.csv")
+        if dataset is not None:
+            print(dataset)
+    except Exception as e:
+        print(f"Unexpected error in main: {str(e)}")
+
+
+if __name__ == "__main__":
+    main()
