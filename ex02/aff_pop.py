@@ -36,23 +36,16 @@ def main():
     Plot population comparison between Morocco and France from 1800 to 2050.
     """
     try:
-        # Load the population dataset
         dataset = load("population_total.csv")
         if dataset is None:
             return
-
-        # Filter for Morocco and France
         countries = ["Morocco", "France"]
         country_data = dataset[dataset["country"].isin(countries)]
         if country_data.empty or country_data["country"].nunique() < 2:
             print("Error: Morocco or France not found in dataset")
             return
-
-        # Extract years and filter to 1800-2050
         years = pd.to_numeric(dataset.columns[1:], errors="coerce")
         mask = (years >= 1800) & (years <= 2050)
-
-        # Plot each country
         for country in countries:
             row = country_data[country_data["country"] == country]
             values = pd.to_numeric(
@@ -60,8 +53,6 @@ def main():
                 errors="coerce"
             )
             plt.plot(years[mask], values[mask], label=country)
-
-        # Configure and display plot
         plt.title("Population: Morocco vs France")
         plt.xlabel("Year")
         plt.ylabel("Population (millions)")
